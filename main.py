@@ -125,30 +125,30 @@ class Signup(BaseHandler):
             params['error_username'] = "That's not a valid username"
             have_error = True
 
-            if not valid_password(password):
-                params['error_password']= "That wasn't a valid password"
-                have_error = True
-            elif password != verify_password:
-                params['error_verify'] = "You're passwords don't match"
-                have_error = True
+        if not valid_password(password):
+            params['error_password']= "That wasn't a valid password"
+            have_error = True
+        elif password != verify_password:
+            params['error_verify'] = "You're passwords don't match"
+            have_error = True
 
-            if not valid_email(email):
-                params['error_email'] = "That's not a valid email"
-                have_error = True
+        if not valid_email(email):
+            params['error_email'] = "That's not a valid email"
+            have_error = True
 
-            if have_error:
-                self.render('signup-form.html', **params)
-            else:
-                self.redirect('/welcome')
+        if have_error:
+            self.render('signup-form.html', **params)
+        else:
+            self.redirect('/welcome?username=' + username)
 
 
 class Welcome(BaseHandler):
     def get(self):
         username = self.request.get('username')
-        if valid_username(username):
-            self.render('welcome.html', username = username)
-        else:
-            self.redirect('/')
+        #if valid_username(username):
+        self.render('welcome1.html', username = username)
+        #else:
+            #self.redirect('/')
 
 
 app = webapp2.WSGIApplication([('/', Signup),
